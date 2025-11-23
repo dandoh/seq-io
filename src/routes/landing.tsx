@@ -523,9 +523,17 @@ export function LandingPage() {
             >
               <div className="flex-1 space-y-6">
                 <div>
-                  <h3 className="text-3xl font-bold text-foreground mb-2">
-                    Auto-Setup
-                  </h3>
+                  <div className="flex items-center gap-3 mb-2">
+                    <h3 className="text-3xl font-bold text-foreground">
+                      Auto-Setup
+                    </h3>
+                    <Badge
+                      variant="outline"
+                      className="text-muted-foreground border-border"
+                    >
+                      Coming Soon
+                    </Badge>
+                  </div>
                   <p className="text-sm font-mono text-muted-foreground tracking-wider uppercase">
                     Zero-config connections for localhost
                   </p>
@@ -632,9 +640,17 @@ export function LandingPage() {
             >
               <div className="flex-1 space-y-6">
                 <div>
-                  <h3 className="text-3xl font-bold text-foreground mb-2">
-                    Session Recording
-                  </h3>
+                  <div className="flex items-center gap-3 mb-2">
+                    <h3 className="text-3xl font-bold text-foreground">
+                      Session Recording
+                    </h3>
+                    <Badge
+                      variant="outline"
+                      className="text-muted-foreground border-border"
+                    >
+                      Coming Soon
+                    </Badge>
+                  </div>
                   <p className="text-sm font-mono text-muted-foreground tracking-wider uppercase">
                     Capture, save, and share database sessions
                   </p>
@@ -757,9 +773,17 @@ export function LandingPage() {
             >
               <div className="flex-1 space-y-6">
                 <div>
-                  <h3 className="text-3xl font-bold text-foreground mb-2">
-                    Smart Filtering
-                  </h3>
+                  <div className="flex items-center gap-3 mb-2">
+                    <h3 className="text-3xl font-bold text-foreground">
+                      Smart Filtering
+                    </h3>
+                    <Badge
+                      variant="outline"
+                      className="text-muted-foreground border-border"
+                    >
+                      Coming Soon
+                    </Badge>
+                  </div>
                   <p className="text-sm font-mono text-muted-foreground tracking-wider uppercase">
                     Find the needle in the haystack
                   </p>

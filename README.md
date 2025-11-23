@@ -2,6 +2,9 @@
 
 Stream database changes in real-time with git diff-style visualization. Supports multiple databases (currently PostgreSQL and MySQL).
 
+[![Visit seqio.dev](https://img.shields.io/badge/🚀_Website-seqio.dev-5B21B6?style=for-the-badge&labelColor=1e1b4b)](https://seqio.dev)
+[![GitHub](https://img.shields.io/badge/GitHub-dandoh%2Fseq--io-181717?style=for-the-badge&logo=github)](https://github.com/dandoh/seq-io)
+
 ![Demo](./demo-video/demo.gif)
 
 ## Prerequisites
