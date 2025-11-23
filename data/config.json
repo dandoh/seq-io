@@ -1,0 +1,22 @@
+{
+  "projectName": "cdc-streamer-hello-world",
+  "kafka": {
+    "version": "3.3",
+    "containerName": "cdc-kafka-1",
+    "port": 9092,
+    "clusterId": "MkU3OEVBNTcwNTJENDM2Qk",
+    "dataDir": "./docker-data/kafka"
+  },
+  "kafkaConnect": {
+    "version": "3.3",
+    "containerName": "cdc-kafka-connect-1",
+    "port": 8083,
+    "groupId": "1",
+    "topics": {
+      "config": "cdc_connect_configs",
+      "offset": "cdc_connect_offsets",
+      "status": "cdc_connect_statuses"
+    },
+    "dataDir": "./docker-data/kafka-connect"
+  }
+}

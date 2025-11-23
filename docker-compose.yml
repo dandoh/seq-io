@@ -1,0 +1,52 @@
+version: '3.9'
+
+services:
+  kafka:
+    image: quay.io/debezium/kafka:${KAFKA_VERSION}
+    container_name: ${KAFKA_CONTAINER_NAME}
+    hostname: kafka
+    ports:
+      - "${KAFKA_PORT}:9092"
+    environment:
+      - CLUSTER_ID=${KAFKA_CLUSTER_ID}
+      - NODE_ID=1
+      - NODE_ROLE=combined
+      - KAFKA_CONTROLLER_QUORUM_VOTERS=1@kafka:9093
+      - KAFKA_LISTENERS=INTERNAL://0.0.0.0:29092,EXTERNAL://0.0.0.0:9092,CONTROLLER://kafka:9093
+      - KAFKA_ADVERTISED_LISTENERS=INTERNAL://kafka:29092,EXTERNAL://localhost:${KAFKA_PORT}
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
+      - KAFKA_INTER_BROKER_LISTENER_NAME=INTERNAL
+    volumes:
+      - ${KAFKA_DATA_DIR}:/kafka/data
+    restart: unless-stopped
+
+  kafka-connect:
+    image: quay.io/debezium/connect:${KAFKA_CONNECT_VERSION}
+    container_name: ${KAFKA_CONNECT_CONTAINER_NAME}
+    hostname: kafka-connect
+    ports:
+      - "${KAFKA_CONNECT_PORT}:8083"
+    environment:
+      - BOOTSTRAP_SERVERS=kafka:29092
+      - GROUP_ID=${KAFKA_CONNECT_GROUP_ID}
+      - CONFIG_STORAGE_TOPIC=${KAFKA_CONNECT_CONFIG_TOPIC}
+      - OFFSET_STORAGE_TOPIC=${KAFKA_CONNECT_OFFSET_TOPIC}
+      - STATUS_STORAGE_TOPIC=${KAFKA_CONNECT_STATUS_TOPIC}
+      - CONFIG_STORAGE_REPLICATION_FACTOR=1
+      - OFFSET_STORAGE_REPLICATION_FACTOR=1
+      - STATUS_STORAGE_REPLICATION_FACTOR=1
+    volumes:
+      - ${KAFKA_CONNECT_DATA_DIR}:/kafka/data
+    depends_on:
+      kafka:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8083/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+

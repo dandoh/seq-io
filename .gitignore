@@ -1,0 +1,26 @@
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+count.txt
+.env
+.nitro
+.tanstack
+.output
+.vinxi
+todos.json
+
+.pnpm-store/
+
+# Docker volumes
+docker-data/
+
+volume/
+
+test_data_local/
+
+# Data directory - track config but not connectors (they contain user credentials)
+data/connectors/*.json
+# But do track the .gitkeep file
+!data/connectors/.gitkeep

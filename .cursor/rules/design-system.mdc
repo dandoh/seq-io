@@ -1,0 +1,114 @@
+---
+description: Enforce the "Engineering Clarity" design system across the application, including typography, colors, layout, and motion.
+globs: src/**/*.{tsx,css,ts}
+---
+
+# Design System: "Engineering Clarity"
+
+This project follows a strict "Engineering Clarity" aesthetic—visualizing complex data flows with clean lines, diagrammatic layouts, and precision typography.
+
+## 1. Visual Philosophy & Atmosphere
+
+-   **Theme**: "Light Mode Mastery". The interface must feel airy, precise, and organized.
+-   **Backgrounds**: Use `bg-background` (NOT `#FFFFFF` or `#F9FAFB`). For cards use `bg-card`.
+-   **Texture**: Use subtle dot grids or micro-grid patterns in the background to emphasize the "engineering" feel.
+    -   *Snippet*: `<div className="fixed inset-0 pointer-events-none opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(oklch(var(--foreground)) 1px, transparent 1px)', backgroundSize: '24px 24px' }} />`
+-   **Borders**: Use `border-border` (NOT `border-gray-200` or `border-slate-200`).
+-   **Shadows**: Very soft, diffuse shadows (`shadow-sm` or `shadow-md`). No heavy drop shadows.
+
+## 2. Typography
+
+-   **Primary Font**: `Figtree`. Use for all Headings and UI text. It should feel friendly but geometric.
+    -   *Usage*: `font-sans` (configured in Tailwind/CSS).
+    -   *Headings*: Use slightly tighter tracking on large headings (`tracking-tight`).
+-   **Code/Technical Data**: `JetBrains Mono` or `Fira Code`.
+    -   *Usage*: `font-mono`.
+    -   *Context*: API keys, logs, JSON payloads, ports, IDs, and terminal-like elements.
+
+## 3. Color Palette
+
+**CRITICAL: Always use theme colors from `src/styles.css`**
+
+-   **NEVER use hardcoded colors**: No `#ffffff`, `rgb()`, `hsl()`, or Tailwind color classes like `bg-red-500`, `text-slate-900`, `bg-blue-50`, etc.
+-   **ALWAYS use theme variables**: Use CSS variables defined in `src/styles.css` via Tailwind classes:
+    -   `bg-primary`, `text-primary`, `bg-primary-foreground`
+    -   `bg-secondary`, `text-secondary`, `bg-secondary-foreground`
+    -   `bg-muted`, `text-muted-foreground`
+    -   `bg-accent`, `text-accent-foreground`
+    -   `bg-destructive`, `text-destructive-foreground`
+    -   `bg-background`, `text-foreground`
+    -   `bg-card`, `text-card-foreground`
+    -   `border-border`, `border-input`
+-   **Opacity variants**: When you need lighter/darker versions, use opacity modifiers:
+    -   `bg-primary/50` (50% opacity)
+    -   `bg-primary/10` (10% opacity)
+    -   `text-primary/80` (80% opacity)
+    -   `border-primary/30` (30% opacity)
+    -   `shadow-primary/20` (20% opacity shadow)
+-   **Primary Action**: Deep Royal Blue / Electric Indigo.
+    -   *Theme Variable*: `bg-primary`, `text-primary-foreground`
+    -   *Button Style*: `bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm border border-primary`
+-   **Status Colors**:
+    -   *Success*: Use `bg-chart-2` or `text-chart-2` (from theme)
+    -   *Error*: Use `bg-destructive`, `text-destructive-foreground`, `bg-destructive/10` for backgrounds
+-   **Text Colors**:
+    -   **Headings/Primary Text**: `text-foreground` (NOT `text-slate-900`)
+    -   **Body/Secondary Text**: `text-muted-foreground` (NOT `text-slate-600`)
+    -   **Subtle Text**: `text-muted-foreground/70` or `text-muted-foreground/50`
+
+## 4. Components & Styling
+
+-   **Cards**:
+    -   Background: `bg-card` (NOT `bg-white`).
+    -   Border: `border-border` (NOT `border-slate-200`).
+-   **Dialogs**:
+    -   Clean headers with `bg-muted` and `border-b border-border`.
+    -   Content on `bg-card`.
+-   **Diagrams**:
+    -   Use `framer-motion` to create connecting lines and flows.
+    -   Style: Diagrammatic, flow-chart like.
+    -   Connectors: Dashed lines or Bézier curves.
+
+## 5. Motion & Animation
+
+-   **Library**: `framer-motion`.
+-   **Feel**: "Mechanical Precision". Smooth, decisive, not bouncy.
+-   **Patterns**:
+    -   **List Items**: Staggered slide-in.
+        ```tsx
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: index * 0.05 }}
+        >
+        ```
+    -   **Data Flow**: Particles moving along a path (infinite loop).
+        ```tsx
+        <motion.div
+          animate={{ x: ["-20%", "400%"], opacity: [0, 1, 1, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        />
+        ```
+    -   **Hover**: Subtle scale or lift.
+        ```tsx
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        ```
+
+## 6. Layout Guidelines
+
+-   **Responsiveness**: Mobile first, but optimize visualizations for Desktop.
+-   **Spacing**: Airy. Use `space-y-6` or `space-y-12` for major sections.
+-   **Container**: `max-w-7xl mx-auto`.
+
+## 7. Implementation Rules
+
+-   Use `lucide-react` for icons (small, refined, stroke width 1.5 or 2).
+-   Use `clsx` and `tailwind-merge` for class handling (`cn` utility).
+-   **ALWAYS** use the `cn` helper for class merging.
+-   **NEVER** revert to default browser styles; always apply the design system tokens.
+-   **COLOR RULE**: 
+    -   ✅ CORRECT: `bg-primary`, `text-muted-foreground`, `border-border`, `bg-primary/50`
+    -   ❌ WRONG: `bg-blue-500`, `text-slate-900`, `border-gray-200`, `bg-[#ffffff]`, `rgb(255, 255, 255)`
+    -   When you need opacity, use Tailwind's opacity modifier: `bg-primary/50`, `text-foreground/80`, `border-primary/30`
+    -   All colors must come from `src/styles.css` theme variables

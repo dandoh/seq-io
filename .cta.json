@@ -1,0 +1,25 @@
+{
+  "projectName": "nhan-starter",
+  "mode": "file-router",
+  "typescript": true,
+  "tailwind": true,
+  "packageManager": "pnpm",
+  "addOnOptions": {},
+  "git": true,
+  "version": 1,
+  "framework": "react-cra",
+  "chosenAddOns": [
+    "eslint",
+    "start",
+    "clerk",
+    "db",
+    "form",
+    "oRPC",
+    "tanstack-query",
+    "shadcn",
+    "store",
+    "storybook",
+    "t3env",
+    "table"
+  ]
+}
