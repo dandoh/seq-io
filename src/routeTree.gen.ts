@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LandingRouteImport } from './routes/landing'
 import { Route as ConfigRouteImport } from './routes/config'
+import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ConnectorIdRouteImport } from './routes/connector.$id'
 import { Route as ApiRpcSplatRouteImport } from './routes/api/rpc.$'
@@ -23,6 +24,11 @@ const LandingRoute = LandingRouteImport.update({
 const ConfigRoute = ConfigRouteImport.update({
   id: '/config',
   path: '/config',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -43,6 +49,7 @@ const ApiRpcSplatRoute = ApiRpcSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/app': typeof AppRoute
   '/config': typeof ConfigRoute
   '/landing': typeof LandingRoute
   '/connector/$id': typeof ConnectorIdRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/app': typeof AppRoute
   '/config': typeof ConfigRoute
   '/landing': typeof LandingRoute
   '/connector/$id': typeof ConnectorIdRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/app': typeof AppRoute
   '/config': typeof ConfigRoute
   '/landing': typeof LandingRoute
   '/connector/$id': typeof ConnectorIdRoute
@@ -65,12 +74,19 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/config' | '/landing' | '/connector/$id' | '/api/rpc/$'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/config'
+    | '/landing'
+    | '/connector/$id'
+    | '/api/rpc/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/config' | '/landing' | '/connector/$id' | '/api/rpc/$'
+  to: '/' | '/app' | '/config' | '/landing' | '/connector/$id' | '/api/rpc/$'
   id:
     | '__root__'
     | '/'
+    | '/app'
     | '/config'
     | '/landing'
     | '/connector/$id'
@@ -79,6 +95,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRoute
   ConfigRoute: typeof ConfigRoute
   LandingRoute: typeof LandingRoute
   ConnectorIdRoute: typeof ConnectorIdRoute
@@ -99,6 +116,13 @@ declare module '@tanstack/react-router' {
       path: '/config'
       fullPath: '/config'
       preLoaderRoute: typeof ConfigRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -127,6 +151,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRoute,
   ConfigRoute: ConfigRoute,
   LandingRoute: LandingRoute,
   ConnectorIdRoute: ConnectorIdRoute,

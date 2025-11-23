@@ -2,7 +2,7 @@
 
 Stream database changes in real-time with git diff-style visualization. Supports multiple databases (currently PostgreSQL and MySQL).
 
-![Demo](./public/demo.gif)
+![Demo](./demo-video/demo.gif)
 
 ## Prerequisites
 

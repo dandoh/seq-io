@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
 import {
   Zap,
@@ -44,7 +44,7 @@ export const Route = createFileRoute('/landing')({
   component: LandingPage,
 })
 
-function LandingPage() {
+export function LandingPage() {
   return (
     <div
       className={cn(
@@ -65,22 +65,14 @@ function LandingPage() {
             </div>
           </div>
           <nav className="hidden md:flex items-center gap-6">
-            <button
-              onClick={(e) => {
-                e.preventDefault()
-              }}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-            >
-              Documentation
-            </button>
-            <button
-              onClick={(e) => {
-                e.preventDefault()
-              }}
+            <a
+              href="https://github.com/dandoh/seq-io"
+              target="_blank"
+              rel="noreferrer"
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
             >
               GitHub
-            </button>
+            </a>
           </nav>
         </header>
 
@@ -149,21 +141,29 @@ function LandingPage() {
               <Button
                 size="lg"
                 className="h-14 text-lg"
-                onClick={(e) => {
-                  e.preventDefault()
-                }}
+                asChild
               >
-                Start Streaming
+                <a
+                  href="https://github.com/dandoh/seq-io"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Start Streaming
+                </a>
               </Button>
               <Button
                 variant="outline"
                 size="lg"
                 className="h-14 text-lg"
-                onClick={(e) => {
-                  e.preventDefault()
-                }}
+                asChild
               >
-                Go to GitHub
+                <a
+                  href="https://github.com/dandoh/seq-io"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Go to GitHub
+                </a>
               </Button>
             </div>
           </motion.div>
@@ -646,7 +646,8 @@ function LandingPage() {
                       <Video className="h-3.5 w-3.5" />
                     </div>
                     <p className="text-muted-foreground">
-                      Record database activity with a simple start/stop interface
+                      Record database activity with a simple start/stop
+                      interface
                     </p>
                   </div>
                   <div className="flex items-start gap-3">
@@ -673,7 +674,9 @@ function LandingPage() {
                   <div className="bg-muted/30 border-b border-border px-4 py-3 flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <div className="h-2.5 w-2.5 rounded-full bg-red-500 animate-pulse" />
-                      <span className="text-xs font-medium">Recording... 00:42</span>
+                      <span className="text-xs font-medium">
+                        Recording... 00:42
+                      </span>
                     </div>
                     <Button
                       size="sm"
@@ -856,7 +859,7 @@ function LandingPage() {
 
               <div className="flex items-center gap-5">
                 <a
-                  href="https://github.com"
+                  href="https://github.com/dandoh/seq-io"
                   target="_blank"
                   rel="noreferrer"
                   className="text-muted-foreground hover:text-foreground transition-colors"
@@ -865,7 +868,7 @@ function LandingPage() {
                   <span className="sr-only">GitHub</span>
                 </a>
                 <a
-                  href="https://x.com"
+                  href="https://x.com/nhanthaiqd"
                   target="_blank"
                   rel="noreferrer"
                   className="text-muted-foreground hover:text-foreground transition-colors"
