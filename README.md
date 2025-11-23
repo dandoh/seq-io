@@ -38,7 +38,4 @@ SeqDB uses Change Data Capture (CDC) with Kafka and Debezium to stream database 
 
 Configuration is stored in `data/config.json`. The application will create a default configuration on first run if none exists.
 
-## Optional Environment Variables
-
-- `KAFKA_BROKER` - Kafka broker address (default: `localhost:9092`)
 
