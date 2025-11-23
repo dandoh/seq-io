@@ -278,12 +278,16 @@ async function performRandomOperations(): Promise<void> {
 
     // Update user status
     async () => {
-      const result = await client.query('SELECT id, username FROM users ORDER BY RANDOM() LIMIT 1')
+      const result = await client.query('SELECT id, username, status FROM users ORDER BY RANDOM() LIMIT 1')
       if (result.rows.length > 0) {
         const user = result.rows[0]
-        const newStatus = ['active', 'inactive', 'suspended'][Math.floor(Math.random() * 3)]
-        await client.query('UPDATE users SET status = $1 WHERE id = $2', [newStatus, user.id])
-        log(`🔄 UPDATE: User "${user.username}" status -> ${newStatus}`, colors.blue)
+        const allStatuses = ['active', 'inactive', 'suspended']
+        const otherStatuses = allStatuses.filter(s => s !== user.status)
+        if (otherStatuses.length > 0) {
+          const newStatus = otherStatuses[Math.floor(Math.random() * otherStatuses.length)]
+          await client.query('UPDATE users SET status = $1 WHERE id = $2', [newStatus, user.id])
+          log(`🔄 UPDATE: User "${user.username}" status: ${user.status} -> ${newStatus}`, colors.blue)
+        }
       }
     },
 
@@ -320,9 +324,14 @@ async function performRandomOperations(): Promise<void> {
       const result = await client.query('SELECT id, name, stock FROM products ORDER BY RANDOM() LIMIT 1')
       if (result.rows.length > 0) {
         const product = result.rows[0]
-        const newStock = Math.floor(Math.random() * 100)
+        const currentStock = parseInt(product.stock, 10)
+        let newStock = Math.floor(Math.random() * 100)
+        // Ensure the new stock is different from current stock
+        while (newStock === currentStock) {
+          newStock = Math.floor(Math.random() * 100)
+        }
         await client.query('UPDATE products SET stock = $1 WHERE id = $2', [newStock, product.id])
-        log(`🔄 UPDATE: Product "${product.name}" stock: ${product.stock} -> ${newStock}`, colors.blue)
+        log(`🔄 UPDATE: Product "${product.name}" stock: ${currentStock} -> ${newStock}`, colors.blue)
       }
     },
 
@@ -347,14 +356,18 @@ async function performRandomOperations(): Promise<void> {
       const result = await client.query('SELECT id, status FROM orders ORDER BY RANDOM() LIMIT 1')
       if (result.rows.length > 0) {
         const order = result.rows[0]
-        const newStatus = ['pending', 'completed', 'cancelled'][Math.floor(Math.random() * 3)]
-        await client.query('UPDATE orders SET status = $1 WHERE id = $2', [newStatus, order.id])
-        log(`🔄 UPDATE: Order #${order.id} status: ${order.status} -> ${newStatus}`, colors.blue)
+        const allStatuses = ['pending', 'completed', 'cancelled']
+        const otherStatuses = allStatuses.filter(s => s !== order.status)
+        if (otherStatuses.length > 0) {
+          const newStatus = otherStatuses[Math.floor(Math.random() * otherStatuses.length)]
+          await client.query('UPDATE orders SET status = $1 WHERE id = $2', [newStatus, order.id])
+          log(`🔄 UPDATE: Order #${order.id} status: ${order.status} -> ${newStatus}`, colors.blue)
+        }
       }
     },
   ]
 
-  // Run operations every 5 seconds
+  // Run operations every 1.5 seconds
   const interval = setInterval(async () => {
     try {
       operationCount++
@@ -367,7 +380,7 @@ async function performRandomOperations(): Promise<void> {
     } catch (error) {
       log(`❌ Error: ${error}`, colors.red)
     }
-  }, 5000)
+  }, 1500)
 
   // Handle cleanup on exit
   const handleExit = async () => {

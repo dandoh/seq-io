@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "dotenv -e .env.local -- vite dev --port 3000",
+    "dev": "vite dev --port 3000",
     "build": "vite build",
     "serve": "vite preview",
     "test": "vitest run",

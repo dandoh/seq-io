@@ -559,14 +559,8 @@ export async function createCDCConsumer(
             parseError: `Validation failed: ${valueResult.error?.message || ''} ${keyResult.error?.message || ''}`,
           }
 
-          console.log("-------------------------")
-          console.log('keyRaw', keyRaw)
-          console.log('valueRaw', valueRaw)
-          console.log(valueResult.error?.message || '')
-          console.log(keyResult.error?.message || '')
-          console.log("-------------------------")
 
-          await onMessage(event)
+          // await onMessage(event)
         }
       } catch (error) {
         // Parse error - return unknown event
@@ -578,7 +572,7 @@ export async function createCDCConsumer(
           parseError: error instanceof Error ? error.message : String(error),
         }
 
-        await onMessage(event)
+        // await onMessage(event)
       }
     },
   })
